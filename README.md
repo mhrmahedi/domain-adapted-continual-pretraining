@@ -44,7 +44,7 @@ This project implements the [ChipNeMo](https://arxiv.org/abs/2311.00176) methodo
 - **Comprehensive Logging**: Detailed logs for debugging and analysis
 
 ##  Project Structure
-
+'''
 LLAMA-3.1-8B/
 │
 ├── config/ # Configuration files
@@ -111,7 +111,7 @@ LLAMA-3.1-8B/
 ├── results.zip # Archived results
 └── README.md # This file
 
-
+'''
 
 ##  Requirements
 
