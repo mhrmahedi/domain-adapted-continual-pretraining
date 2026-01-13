@@ -1,0 +1,151 @@
+# ChipNeMo DAPT - SMALL DATASET MODE (31 samples)
+# Optimized for maximum learning from limited data
+
+model:
+  base_model: "meta-llama/Meta-Llama-3.1-8B"
+  model_type: "causal_lm"
+  context_length: 4096
+  use_flash_attention: false
+  attn_implementation: "sdpa"
+  
+  quantization:
+    load_in_4bit: true
+    bnb_4bit_compute_dtype: "bfloat16"
+    bnb_4bit_quant_type: "nf4"
+    bnb_4bit_use_double_quant: true
+
+tokenizer_adaptation:
+  enable: true
+  max_new_tokens: 5000
+  vocab_extension_threshold: 100
+
+data:
+  curated_data_path: "data/curated/curated_data.jsonl"
+  public_data_mix: false
+  public_data_percentage: 9.2
+  train_val_split: 0.9
+
+training:
+  output_dir: "models/checkpoints"
+  
+  # ============================================================
+  # CRITICAL: Small Dataset Optimization
+  # ============================================================
+  learning_rate: 5.0e-4  # ChipNeMo it was 5.0e-4
+  lr_scheduler_type: "cosine"
+  warmup_ratio: 0.05  # More warmup for stability
+  weight_decay: 0.05  # INCREASED from 0.01 (prevent overfitting)
+  max_grad_norm: 1.0  # More aggressive clipping
+  
+  adam_beta1: 0.9
+  adam_beta2: 0.999
+  adam_epsilon: 1.0e-8
+  optim: "paged_adamw_8bit"
+  
+  # ============================================================
+  # Multi-Epoch Strategy 
+  # ============================================================
+  num_train_epochs: 2  # Can be modified, paper it was 1
+  max_steps: -1
+  
+  # ============================================================
+  # Smaller Batch for Better Gradient Updates
+  # ============================================================
+  per_device_train_batch_size: 2
+  gradient_accumulation_steps: 4  # (effective batch=8)
+  per_device_eval_batch_size: 8
+  
+  # With 31 samples and batch=8:
+  # Steps per epoch: 31/8 = ~4 steps
+  # Total steps: 4 × 100 = ~400 steps
+  
+  # ============================================================
+  # Precision
+  # ============================================================
+  fp16: false
+  bf16: true
+  tf32: true
+  
+  # ============================================================
+  # FREQUENT Evaluation (Small dataset needs monitoring)
+  # ============================================================
+  eval_strategy: "steps"
+  eval_steps: 50  # 
+  eval_accumulation_steps: 4  # Reduced from 16
+  eval_on_start: true  # ENABLED to see initial performance
+  
+  metric_for_best_model: "eval_loss"
+  greater_is_better: false
+  load_best_model_at_end: true  # ENABLED to use best checkpoint
+  
+  # ============================================================
+  # Frequent Checkpointing
+  # ============================================================
+  save_strategy: "steps"
+  save_steps: 100  # Save every 20 steps
+  save_total_limit: 5  # Keep best 5 checkpoints
+  save_only_model: false  # Save full checkpoint for resume
+  
+  # ============================================================
+  # Detailed Logging
+  # ============================================================
+  logging_dir: "models/checkpoints/logs"
+  logging_steps: 10  # CHANGED from 20 
+  logging_first_step: true
+  logging_strategy: "steps"
+  report_to: ["tensorboard"]
+  
+  # ============================================================
+  # Memory Optimization
+  # ============================================================
+  gradient_checkpointing: true
+  gradient_checkpointing_kwargs:
+    use_reentrant: false
+  
+  # ============================================================
+  # DataLoader
+  # ============================================================
+  dataloader_num_workers: 4
+  dataloader_pin_memory: true
+  dataloader_prefetch_factor: 2
+  dataloader_drop_last: false  # CHANGED to false (keep all samples)
+  group_by_length: true
+  
+  # ============================================================
+  # Additional Settings
+  # ============================================================
+  ddp_find_unused_parameters: false
+  use_cpu: false
+  seed: 42
+  prediction_loss_only: false
+  remove_unused_columns: false
+  label_names: ["labels"]
+  auto_find_batch_size: false
+  skip_memory_metrics: false
+
+# ============================================================
+# LoRA (Still using QLoRA for efficiency)
+# ============================================================
+lora:
+  enable: true
+  r: 32  # more capacity for small data
+  lora_alpha: 64  # INCREASED from 64
+  target_modules:
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
+    - "gate_proj"  # ADDED (more modules for small data)
+    - "up_proj"    # ADDED
+    - "down_proj"  # ADDED
+  lora_dropout: 0.05  # regularization
+  bias: "none"
+  task_type: "CAUSAL_LM"
+
+# ============================================================
+# AGGRESSIVE Early Stopping (Prevent overfitting)
+# ============================================================
+early_stopping:
+  enable: true
+  patience: 8  # INCREASED from 3 
+  threshold: 0.01  # More lenient threshold

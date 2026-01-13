@@ -1,0 +1,46 @@
+# Data Extraction Configuration
+extraction:
+  input_dir: "data/raw"
+  output_dir: "data/extracted"
+  file_types: [".pdf", ".docx", ".txt", ".html", ".md"]
+  strategy: "hi_res"  # hi_res or fast
+  chunk_size: 512
+  overlap: 50
+  parallel_workers: 4
+
+# Data Curation Configuration
+curation:
+  input_dir: "data/extracted"
+  output_dir: "data/curated"
+  
+  # ChipNeMo-style cleaning
+  cleaning:
+    fix_unicode: true
+    remove_special_chars: false  # Keep domain-specific symbols
+    normalize_whitespace: true
+    min_doc_length: 100
+    max_doc_length: 1000000
+  
+  # Quality filtering
+  quality_filters:
+    min_word_count: 50
+    max_word_count: 100000
+    min_unique_words: 20
+    min_avg_word_length: 3.0
+    max_avg_word_length: 12.0
+    min_alpha_ratio: 0.6
+  
+  # Domain-specific filtering
+  domain_filters:
+    enable_code_detection: true
+    enable_technical_term_detection: true
+    enable_deduplication: true
+    dedup_threshold: 0.95
+
+# Data Processing
+processing:
+  input_dir: "data/curated"
+  output_dir: "data/processed"
+  train_split: 0.95
+  val_split: 0.05
+  seed: 42

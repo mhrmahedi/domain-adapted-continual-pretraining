@@ -1,0 +1,32 @@
+# ChipNeMo Project Requirements for Conda (Linux)
+# Install with: pip install -r requirements.txt (inside conda environment)
+
+# Core Deep Learning
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+
+# Transformers & Model Training
+transformers>=4.35.0
+accelerate>=0.24.0
+datasets>=2.14.0
+peft>=0.6.0
+bitsandbytes>=0.41.0
+sentencepiece>=0.1.99
+protobuf>=3.20.0
+
+# Gradio for Chatbot Interface
+gradio>=4.0.0
+
+# Configuration & Utilities
+pyyaml>=6.0
+numpy>=1.24.0
+pandas>=2.0.0
+
+# Optional: PDF Processing (uncomment if needed)
+# pymupdf>=1.23.0
+# pdfplumber>=0.10.0
+
+# Optional: Monitoring (uncomment if needed)
+# tensorboard>=2.15.0
+# wandb>=0.16.0

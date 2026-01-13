@@ -1,0 +1,350 @@
+# ============================================================================
+# Domain LLM Pipeline - Git Ignore Configuration
+# Only uploads: .py, .yaml/.yml, .md, and configuration files
+# ============================================================================
+
+# =============================================================================
+# DATA DIRECTORIES (Large files - do not upload)
+# =============================================================================
+data/
+data/raw/
+data/extracted/
+data/curated/
+data/processed/
+!data/raw/.gitkeep
+!data/extracted/.gitkeep
+!data/curated/.gitkeep
+!data/processed/.gitkeep
+
+# =============================================================================
+# MODEL DIRECTORIES (Large files - do not upload)
+# =============================================================================
+models/
+models/base/
+models/checkpoints/*
+models/final/*
+models/tokenizer/*
+!models/base/.gitkeep
+!models/checkpoints/.gitkeep
+!models/final/.gitkeep
+!models/tokenizer/.gitkeep
+
+# Model weights and checkpoints
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.h5
+*.pb
+
+# =============================================================================
+# LOGS AND OUTPUTS
+# =============================================================================
+logs/
+results/
+!logs/.gitkeep
+!results/.gitkeep
+
+# Log files
+*.log
+*.out
+*.err
+
+# =============================================================================
+# PYTHON
+# =============================================================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+.env
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# pyenv
+.python-version
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath
+*.sage.py
+
+# Spyder
+.spyderproject
+.spyproject
+
+# Rope
+.ropeproject
+
+# mkdocs
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre
+.pyre/
+
+# =============================================================================
+# MACHINE LEARNING SPECIFIC
+# =============================================================================
+# Weights & Biases
+wandb/
+.wandb/
+
+# TensorBoard
+runs/
+tensorboard/
+tb_logs/
+
+# MLflow
+mlruns/
+
+# Hugging Face cache
+.cache/
+huggingface/
+transformers_cache/
+
+# =============================================================================
+# OPERATING SYSTEM
+# =============================================================================
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# =============================================================================
+# IDEs AND EDITORS
+# =============================================================================
+# VSCode
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+*.iws
+out/
+
+# Sublime Text
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+Session.vim
+Sessionx.vim
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# =============================================================================
+# COMPRESSED FILES (if any)
+# =============================================================================
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+*.gz
+*.bz2
+*.xz
+
+# =============================================================================
+# TEMPORARY AND BACKUP FILES
+# =============================================================================
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+.*.swp
+
+# =============================================================================
+# SECRETS AND CREDENTIALS
+# =============================================================================
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+secrets.yaml
+credentials.json
+*.secret
+
+# =============================================================================
+# DOCUMENTS AND MEDIA (raw input data)
+# =============================================================================
+*.pdf
+*.docx
+*.doc
+*.xlsx
+*.xls
+*.pptx
+*.ppt
+
+# Images
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.tiff
+*.ico
+*.svg
+
+# Videos
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+
+# Audio
+*.mp3
+*.wav
+*.flac
+
+# =============================================================================
+# DATABASE FILES
+# =============================================================================
+*.db
+*.sqlite
+*.sqlite3
+
+# =============================================================================
+# WHAT TO INCLUDE (Explicit whitelist)
+# =============================================================================
+# Always include Python source files
+!*.py
+
+# Always include YAML config files
+!*.yaml
+!*.yml
+
+# Always include documentation
+!*.md
+!*.txt
+!*.rst
+
+# Always include requirements
+!requirements.txt
+!requirements-dev.txt
+
+# Always include configuration
+!*.json
+!*.toml
+!*.ini
+!*.cfg
+
+# Always include project structure
+!README.md
+!LICENSE
+!.gitignore
+
+# Keep directory structure with .gitkeep files
+!**/.gitkeep

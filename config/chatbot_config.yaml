@@ -1,0 +1,44 @@
+# ChipNeMo Comparison Chatbot Configuration - 3-WAY COMPARISON
+
+models:
+  base:
+    name: "Base LLaMA 3.1 8B"
+    path: "meta-llama/Meta-Llama-3.1-8B"  # Or our local path
+    description: "Original pretrained model (no adaptation)"
+    color: "#FF6B6B"
+    enabled: true
+  
+  adapted:
+    name: "Initialized Model"
+    path: "models/initialized_model"  # Intialized embedding model
+    description: "Extended vocabulary + ChipNeMo embedding initialization (no training)"
+    color: "#4ECDC4"
+    enabled: false
+  
+  trained:
+    name: "Pretrained Model (DAPT)"
+    path: "models/checkpoints/chipnemo_final"
+    description: "After continual pretraining on domain data"
+    color: "#95E1D3"
+    enabled: true
+
+generation:
+  max_new_tokens: 256
+  temperature: 0.1
+  top_p: 0.9
+  top_k: 10
+  do_sample: true
+  repetition_penalty: 1.1
+
+ui:
+  title: " ChipNeMo: Three-Way Model Comparison"
+  description: "Compare Base vs Initialized vs Pretrained models"
+  theme: "soft"
+  port: 7860
+  share: false
+  show_metrics: true
+
+system:
+  device: "auto"
+  dtype: "bfloat16"
+  low_memory_mode: false
